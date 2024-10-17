@@ -1,25 +1,24 @@
-# README
+# Time Trucker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## サイト概要
 
-Things you may want to cover:
+### サイトテーマ
 
-* Ruby version
+学習時間管理アプリ
 
-* System dependencies
+### 主な利用シーン
 
-* Configuration
+- 学習時間管理
+- 目標時間を設定する
 
-* Database creation
+## 設計書
 
-* Database initialization
+## 開発環境
 
-* How to run the test suite
+- OS：Linux(CentOS)
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JS ライブラリ：jQuery
+- IDE：Visual Studio Code
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# time_trucker_app
+## 使用 gem
