@@ -1,0 +1,10 @@
+@startuml erd
+!include time_trucker_table.pu
+
+skinparam Linetype ortho
+
+users ||-l-o{ goals
+users ||-o{ daily_summaries
+users ||-d-o{ study_sessions
+
+@enduml

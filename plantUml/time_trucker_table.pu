@@ -1,0 +1,46 @@
+@startuml tables
+
+!define Table(name,desc) entity name as "desc" << (T,#FFAAAA) >>
+
+Table(users,"users\nユーザー") {
+  + id [PK]
+  --
+  name [ユーザー名]
+  email [メールアドレス]
+  password [パスワード]
+  created_at [作成日]
+  updated_at [更新日]
+}
+
+Table(goals,"goals\n学習目標時間") {
+  + id [PK]
+  --
+  # user_id [FK]
+  day_of_week [曜日]
+  target_time [目標学習時間]
+  created_at [作成日]
+  updated_at [更新日]
+}
+
+Table(daily_summaries,"daily_summaries\n１日の実学習時間") {
+  + id [PK]
+  --
+  # user_id [FK]
+  date [日付]
+  total_actual_time [総実学習時間]
+  created_at [作成日]
+  updated_at [更新日]
+}
+
+Table(study_sessions,"study_sessions\n実学習時間") {
+  + id [PK]
+  --
+  # user_id [FK]
+  start_time [開始時間]
+  end_time [終了時間]
+  actual_time [実時間]
+  created_at [作成日]
+  updated_at [更新日]
+}
+
+@enduml
