@@ -1,0 +1,18 @@
+@startuml erd
+!include time_trucker_display.pu
+
+skinparam Linetype ortho
+
+header --> record_study
+header -r-> edit_user
+header --> schedule
+header -r-> sign_in
+sign_in --> sign_up
+sign_in --> record_study
+sign_up --> sign_in
+edit_user --> record_study
+record_study --> index_study
+index_study --> show_study
+show_study --> index_study
+
+@enduml
