@@ -12,15 +12,16 @@ Table(users,"users\nユーザー") {
   updated_at [更新日]
 }
 
-Table(goals,"goals\n学習目標時間") {
-  + id [PK]
-  --
-  # user_id [FK]
-  day_of_week [曜日]
-  target_time [目標学習時間]
-  created_at [作成日]
-  updated_at [更新日]
-}
+' 2次開発に回す
+' Table(goals,"goals\n学習目標時間") {
+'   + id [PK]
+'   --
+'   # user_id [FK]
+'   day_of_week [曜日]
+'   target_time [目標学習時間]
+'   created_at [作成日]
+'   updated_at [更新日]
+' }
 
 Table(daily_summaries,"daily_summaries\n１日の実学習時間") {
   + id [PK]

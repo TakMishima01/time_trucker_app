@@ -29,7 +29,7 @@ package "ユーザー関連の実装" <<Rectangle>> #ffe4b5 {
     ・新規登録ボタンをクリック
   }
 
-  Display(edit_user, "ユーザー情報編集") {
+  Display(user_edit, "ユーザー情報編集") {
     ・ユーザー情報入力欄
     __
     ・必須項目を入力し、登録ボタンをクリック
@@ -39,31 +39,33 @@ package "ユーザー関連の実装" <<Rectangle>> #ffe4b5 {
 
 package "学習管理画面の実装" <<Rectangle>> #b0c4de {
 
-  Display(record_study, "学習時間打刻") {
+  Display(study_new, "学習時間打刻") {
     ・開始ボタンをクリック
     __
     ・終了ボタンをクリック
     __
     ・学習時間一覧ボタンをクリック
-    __
-    ・学習計画編集ボタンをクリック
+    ' 二次開発に回す
+    ' __
+    ' ・学習計画編集ボタンをクリック
   }
 
-  Display(index_study, "学習時間一覧") {
+  Display(study_index, "学習時間一覧") {
     ・表示年月日選択ボタンをクリック
     __
     ・詳細ボタンをクリック
   }
 
-  Display(show_study, "学習時間詳細") {
+  Display(study_edit, "学習時間詳細") {
     ・打刻を修正するボタンをクリック
     __
     ・戻るボタンをクリック
   }
 
-  Display(schedule, "学習計画") {
-    ・登録するボタンをクリック
-  }
+' 二次開発に回す
+  ' Display(schedule, "学習計画") {
+  '   ・登録するボタンをクリック
+  ' }
 
 }
 @enduml
