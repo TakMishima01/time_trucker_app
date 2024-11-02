@@ -11,6 +11,34 @@
   </head>
 
   <body>
+      <!-- header.html -->
+    <header
+      class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-white border-bottom shadow-sm"
+    >
+      <p class="h5 my-0 mr-md-auto font-weight-normal">Study Time Trucker</p>
+    </header>
+    <!-- header.html -->
+      <% if user_signed_in? %>
+        <li>
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to "新規登録", new_user_registration_path %>
+        </li>
+        <li>
+          <%= link_to "ログイン", new_user_session_path %>
+        </li>
+      <% end %>
     <%= yield %>
+    <footer class="mt-2">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container-fluid mx-0">
+          <div class="ml-auto font-weight-normal">
+            I never worry about action, but only inaction.
+          </div>
+        </div>
+      </nav>
+    </footer>
   </body>
 </html>
