@@ -37,6 +37,7 @@ Table(study_sessions,"study_sessions\n実学習時間") {
   + id [PK]
   --
   # user_id [FK]
+  # daily_summary_id [FK]
   start_time [開始時間]
   end_time [終了時間]
   actual_time [実時間]
