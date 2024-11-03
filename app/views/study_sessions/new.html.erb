@@ -1,2 +1,61 @@
-<h1>StudySessions#new</h1>
-<p>Find me in app/views/study_sessions/new.html.erb</p>
+<main class="bg-light">
+    <nav
+    class="navbar navbar-expand-lg navbar-light bg-white sticky-top mb-5"
+    >
+    <div class="container-fluid mx-0">
+        <div class="navbar-brand h5">学習時間打刻</div>
+        <a class="text-secondary" href="">学習時間一覧へ</a>
+    </div>
+    </nav>
+    <div class="container py-5">
+        <div class="row my-5">
+            <div class="col-7 my-5">
+                <div class="card px-0 shadow-lg" style="height: 200px">
+                    <div class="card-header text-center bg-info">
+                        <span class="h6 text-white"></span>
+                    </div>
+                    <div
+                    class="card-body d-flex justify-content-center align-items-center"
+                    >
+                        <blockquote class="blockquote mb-0">
+                            <span class="my-auto h1 font-weight-normal"></span>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5 my-5">
+                <div class="row mt-5 ml-4">
+                    <% if @ongoing_session %>
+                        <div class="col-6">
+                            <%= button_tag type: 'button', class: 'btn btn-light btn-lg btn-block text-secondary shadow-lg border', style: 'height: 137px', disabled: true do %>
+                                <i class="fa-regular fa-pen-to-square fa-xl"></i>
+                                開始
+                            <% end %>
+                        </div>
+                        <div class="col-6">
+                            <%= button_to study_session_path(@latest_session.id), method: :patch, 
+                                class: 'btn btn-light btn-lg btn-block text-secondary shadow-lg border', style: 'height: 137px' do 
+                            %>
+                                <i class="fa-regular fa-circle-xmark fa-xl"></i>
+                                終了
+                            <% end %>
+                        </div>
+                    <% else %>
+                        <div class="col-6">
+                            <%= button_to study_sessions_path, method: :post, class: 'btn btn-light btn-lg btn-block text-secondary shadow-lg border', style: 'height: 137px' do %>
+                                <i class="fa-regular fa-pen-to-square fa-xl"></i>
+                                開始
+                            <% end %>
+                        </div>
+                        <div class="col-6">
+                            <%= button_tag type: 'button', class: 'btn btn-light btn-lg btn-block text-secondary shadow-lg border', style: 'height: 137px', disabled: true do %>
+                                <i class="fa-regular fa-circle-xmark fa-xl"></i>
+                                終了
+                            <% end %>
+                        </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

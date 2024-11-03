@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_10_31_145832) do
+ActiveRecord::Schema.define(version: 2024_11_03_071527) do
 
   create_table "daily_summaries", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "date"
-    t.integer "total_actual_time"
+    t.decimal "total_actual_time", precision: 6, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_daily_summaries_on_user_id"
@@ -25,9 +25,12 @@ ActiveRecord::Schema.define(version: 2024_10_31_145832) do
     t.integer "user_id", null: false
     t.datetime "start_time"
     t.datetime "end_time"
-    t.integer "actual_time"
+    t.decimal "actual_time", precision: 6, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "daily_summary_id", null: false
+    t.boolean "ongoing", default: false
+    t.index ["daily_summary_id"], name: "index_study_sessions_on_daily_summary_id"
     t.index ["user_id"], name: "index_study_sessions_on_user_id"
   end
 
@@ -45,5 +48,6 @@ ActiveRecord::Schema.define(version: 2024_10_31_145832) do
   end
 
   add_foreign_key "daily_summaries", "users"
+  add_foreign_key "study_sessions", "daily_summaries"
   add_foreign_key "study_sessions", "users"
 end
