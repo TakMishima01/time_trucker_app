@@ -45,4 +45,17 @@ Table(study_sessions,"study_sessions\n実学習時間") {
   updated_at [更新日]
 }
 
+Table(daily_study_sessions,"daily_study_sessions\n学習実績view") {
+  --
+  # user_id [FK]
+  # daily_summary_id [FK]
+  date [日付]
+  start_time1 [開始時間1]
+  end_time1 [終了時間1]
+  start_time2 [開始時間2]
+  end_time2 [終了時間2]
+  start_time3 [開始時間3]
+  end_time3 [終了時間3]
+  total_actual_time [実時間]
+}
 @enduml
