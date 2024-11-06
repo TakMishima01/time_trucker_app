@@ -3,8 +3,11 @@
 
 skinparam Linetype ortho
 
-users ||-l-o{ goals
-users ||-o{ daily_summaries
-users ||-d-o{ study_sessions
+' 2次開発に回す
+' users ||-l-o{ goals
+users ||-r-o{ daily_summaries
+users ||-l-o{ study_sessions
+users ||-d-o{ daily_study_sessions
+daily_summaries ||--|| daily_study_sessions
 
 @enduml

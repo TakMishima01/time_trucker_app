@@ -1,2 +1,126 @@
-<h1>DailySummaries#index</h1>
-<p>Find me in app/views/daily_summaries/index.html.erb</p>
+    <main class="bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white mb-5">
+        <div class="container-fluid mx-0">
+          <div class="navbar-brand h5">学習時間一覧</div>
+          <%= link_to "学習時間一覧へ", daily_summaries_path, class: "text-secondary" %>
+        </div>
+      </nav>
+      <div class="container py-5">
+        <div class="row mb-5 mt-3">
+          <div class="col-6 px-5">
+            <p class="text-secondary border-bottom">総学習時間</p>
+            <div class="row">
+              <div class="col-8">
+                <span class="text-success font-weight-bolder">今月</span>
+                <p class="h3 font-weight-light"><%= @current_month_actual_time %>時間</p>
+              </div>
+              <div class="col-4">
+                <span class="text-secondary font-weight-bolder">先月</span>
+                <p class="h3 font-weight-light"><%= @last_month_actual_time %>時間</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 px-5">
+            <p class="text-secondary border-bottom mx-3">表示年月選択</p>
+            <div
+              class="row pt-4 px-5 d-flex justify-content-between align-items-center"
+            >
+              <%= link_to url_for(controller: 'daily_summaries', action: 'index', year: @prev_year, month: @prev_month), class: 'pt-1 text-dark' do %>
+                <i class="fa-solid fa-chevron-left fa-xl"></i>
+              <% end %>
+              <div class="h3 font-weight-light text-center flex-grow-1">
+                <%= "#{@year}年#{@month}月" %>
+              </div>
+              <%= link_to url_for(controller: 'daily_summaries', action: 'index', year: @next_year, month: @next_month), class: 'pt-1 text-dark' do %>
+                <i class="fa-solid fa-chevron-right fa-xl"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <table class="table table-bordered shadow-sm">
+            <thead class="sticky-top table-dark bg-info">
+              <tr class="">
+                <th class="font-weight-normal align-middle" scope="col">
+                  日付
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  曜日
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">学習１</span>
+                  <span class="d-block">開始</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">学習１</span>
+                  <span class="d-block">終了</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">学習2</span>
+                  <span class="d-block">開始</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">学習2</span>
+                  <span class="d-block">終了</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">学習3</span>
+                  <span class="d-block">開始</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">学習3</span>
+                  <span class="d-block">終了</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  <span class="d-block">総時間</span>
+                  <span class="d-block">(時間)</span>
+                </th>
+                <th class="font-weight-normal align-middle" scope="col">
+                  操作
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-white border-secondary">
+                <% @daily_study_sessions_map.each do |session| %>
+                    <tr>
+                        <th class="font-weight-normal text-center" scope="row">
+                            <%= session[:date] %>
+                        </th>
+                        <td class="text-center">
+                            <%= session[:day_of_week] %>
+                        </td>
+                        <td class="text-center h5 font-weight-light">
+                            <%= session[:start_time1] %> 
+                        </td>
+                        <td class="text-center h5 font-weight-light">
+                            <%= session[:end_time1] %> 
+                        </td>
+                        <td class="text-center h5 font-weight-light">
+                            <%= session[:start_time2] %> 
+                        </td>
+                        <td class="text-center h5 font-weight-light">
+                            <%= session[:end_time2] %> 
+                        </td>
+                        <td class="text-center h5 font-weight-light">
+                            <%= session[:start_time3] %> 
+                        </td>
+                        <td class="text-center h5 font-weight-light">
+                            <%= session[:end_time3] %> 
+                        </td>
+                        <td class="text-center">
+                            <%= session[:total_actual_time] %>                             
+                        </td>
+                        <td class="py-2 px-5">
+                        <% if session[:daily_summary_id].present? %>
+                            <%= link_to "詳細", edit_daily_summary_path(session[:daily_summary_id]), class: 'btn btn-success d-flex justify-content-center align-items-center' %>
+                        <% else %>
+                            <%= link_to "詳細", "#", class: 'btn btn-success disabled d-flex justify-content-center align-items-center' %>
+                        <% end %>
+                        </td>
+                    </tr>
+                <%end%>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
