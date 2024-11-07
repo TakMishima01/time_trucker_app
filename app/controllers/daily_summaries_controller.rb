@@ -4,16 +4,33 @@ class DailySummariesController < ApplicationController
     # @return [void] 
     #
   def index
-    # パラメーターから表示する年と月を取得、指定がない（初期表示）場合は現在の年とつきを取得
-    @year = params[:year].present? ? params[:year].to_i : Time.current.year
-    @month = params[:month].present? ? params[:month].to_i : Time.current.month
+
+    # 現在の今月と先月の合計学習時間を取得
+    this_month = Time.current
+    last_month = 1.month.ago
+    this_month_sessions = current_user.daily_study_sessions.where('daily_study_sessions.date >= ? AND daily_study_sessions.date <= ?', this_month.beginning_of_month, this_month.end_of_month)
+    last_month_sessions = current_user.daily_study_sessions.where('daily_study_sessions.date >= ? AND daily_study_sessions.date <= ?', last_month.beginning_of_month, last_month.end_of_month)
+    @this_month_total_sessions = convert_minutes_to_hours(calc_total_time(this_month_sessions))
+    @last_month_total_sessions = convert_minutes_to_hours(calc_total_time(last_month_sessions))
+
+    if params[:year].present? && params[:month].present?
+      @year = params[:year].to_i
+      @month = params[:month].to_i
+    else
+      @year = this_month.year
+      @month = this_month.month
+    end
 
     # 表示する月の1日の日付を作成
     disp_day = Date.new(@year, @month, 1)
     # 表示する月の日付と曜日のマップを作成
     @daily_study_sessions_map = generate_date_map(disp_day.year, disp_day.month)
     # ユーザーの月間学習セッションを取得
-    daily_study_sessions = current_user.daily_study_sessions.where('daily_study_sessions.date >= ? AND daily_study_sessions.date <= ?', disp_day.beginning_of_month, disp_day.end_of_month)
+    daily_study_sessions = if @year == this_month.year && @month == this_month.month
+                              this_month_sessions
+                          else 
+                              current_user.daily_study_sessions.where('daily_study_sessions.date >= ? AND daily_study_sessions.date <= ?', disp_day.beginning_of_month, disp_day.end_of_month)
+                          end
 
     # 前月と次月の計算
     @prev_year, @prev_month = @month ==  1 ? [@year - 1, 12] : [@year, @month - 1]
@@ -97,6 +114,18 @@ class DailySummariesController < ApplicationController
     return 0.0 if minutes.nil?
 
     (minutes/60).round(1)
+  end
+
+  # 1ヶ月間のトータル学習時間を算出
+  #
+  # @param [daily_study_sessions] 学習時間view
+  # @retun [Integer] 1ヶ月の合計学習時間
+  def calc_total_time(sessions)
+    total_time = 0
+    sessions.each do |session|
+      total_time += session.total_actual_time
+    end
+    total_time
   end
   
 end
