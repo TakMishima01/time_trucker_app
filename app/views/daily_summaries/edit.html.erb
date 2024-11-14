@@ -1,0 +1,79 @@
+    <!-- main -->
+    <main class="bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top mb-5">
+            <div class="container-fluid mx-0">
+                <div class="navbar-brand h5">学習時間詳細</div>
+                <%= link_to "学習時間一覧へ", daily_summaries_path, class: "text-secondary" %>
+            </div>
+        </nav>
+        <div class="container py-5 px-5">
+            <div class="row mb-5">
+                <table class="table table-borderless shadow-sm">
+                    <tbody>
+                        <tr>
+                            <th class="table-dark bg-info text-white" scope="row">日付</th>
+                            <td class="bg-white">
+                                <%= @daily_summary.date %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <%= form_with(model: @daily_summary, local: true) do |form| %>
+            <%= form.hidden_field :date, value: @daily_summary.date %>
+            <div class="row">
+                <table class="table table-bordered shadow-sm">
+                    <thead class="table-dark bg-info text-white">
+                        <tr>
+                            <th class="border-light" scope="col"></th>
+                            <th class="border-light" scope="col">元々の打刻時間</th>
+                            <th class="border-light" scope="col">変更後の打刻時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @study_sessions.each_with_index do |session, index| %>
+                        <tr>
+                            <th class="table-dark bg-info text-white align-middle" scope="row">
+                                学習時間<%= index + 1 %>
+                            </th>
+                            <td class="align-middle text-center">
+                                <span class="mx-3"><%= session.formatted_start_time %></span>
+                                <span class="mx-3">~</span>
+                                <span class="mx-3"><%= session.formatted_end_time %></span>
+                            </td>
+                            <td class="py-2">
+                                <div class="form-inline py-0">
+                                    <%= form.hidden_field "study_sessions_attributes][#{index}][id", value: session.id %>
+                                    <%= form.number_field "study_sessions_attributes][#{index}][start_time_hour", value: nil, class: 'form-control input_time text-center mx-2' %>
+                                    :
+                                    <%= form.number_field "study_sessions_attributes][#{index}][start_time_minute", value: nil, class: 'form-control input_time text-center mx-2' %>
+                                    ~
+                                    <%= form.number_field "study_sessions_attributes][#{index}][end_time_hour", value: nil, class: 'form-control input_time text-center mx-2' %>
+                                    :
+                                    <%= form.number_field "study_sessions_attributes][#{index}][end_time_minute", value: nil, class: 'form-control input_time text-center mx-2' %>
+                                </div>
+                            </td>
+                        </tr>
+                        <% end %>
+                        <tr>
+                            <td colspan="3" class="text-center">
+                                <button id="addRowButton" class="btn btn-primary">
+                                    <i class="bi bi-plus"></i> 追加
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <%= link_to '戻る', 'javascript:history.back()', class: 'btn btn-outline-secondary btn-lg shadow-sm py-3 px-4' %>
+                </div>
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <%= form.submit "打刻修正をする", class: 'btn btn-success btn-lg shadow-sm py-3 px-4' %>
+                </div>
+            </div>
+            <% end %>
+        </div>
+    </main>
+    <!-- main -->

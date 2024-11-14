@@ -1,0 +1,27 @@
+<main class="bg-light text-center signin-area">
+  <%= form_with model: @user, html: { class: 'form-signin'}, url: user_session_path do |f| %>
+    <div
+    class="mb-3 mx-auto border border-light text-secondary rounded shadow-sm"
+    style="width: 150px"
+    >
+      <h1 class="h4">Study Time</h1>
+      <i class="fa-regular fa-clock fa-xl"></i>
+      <h1 class="h4">Trucker</h1>
+    </div>
+    <%= f.label :email, 'メールアドレス', class: 'sr-only', for: 'inputEmail' %>
+    <%= f.email_field :email, id: 'inputEmail', class: 'form-control', placeholder: 'メールアドレス', required: true, autofocus: true %>
+
+    <%= f.label :password, 'パスワード', class: 'sr-only', for: 'inputPassword' %>
+    <%= f.password_field :password, id: 'inputPassword', class: 'form-control', placeholder: 'パスワード', required: true, autofocus: true, autocomplete: "current-password" %>
+
+    <% if devise_mapping.rememberable? %>
+      <div class="field checkbox mb-3">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+    <%= f.submit "ログイン", class: 'btn btn-lg btn-primary btn-block' %>
+    <%= link_to "新規登録画面へ", new_user_registration_path, class: 'btn btn-lg btn-outline-success btn-block' %>
+    <p class="mt-5 mb-3 text-muted">© 2024 mishima</p>
+  <% end %>
+</main>

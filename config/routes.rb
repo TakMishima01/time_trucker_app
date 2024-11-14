@@ -1,3 +1,10 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users
+  # ルートパスの設定
+  root "study_sessions#new"
+
+  resources :daily_summaries, only:[:index, :edit, :create, :update]
+
+  resources :study_sessions, only: [:new, :create, :update, :destory]
+
 end
