@@ -1,8 +1,10 @@
 class DailySummariesController < ApplicationController
-    # 指定された年月の日付と学習セッションを取得 
-    # 
-    # @return [void] 
-    #
+  before_action :convert_time_params, only: [:create, :update]
+
+  # 指定された年月の日付と学習セッションを取得 
+  # 
+  # @return [void] 
+  #
   def index
 
     # 現在の今月と先月の合計学習時間を取得
@@ -72,12 +74,22 @@ class DailySummariesController < ApplicationController
   end
 
   def edit
+    @daily_summary = current_user.daily_summaries.find(params[:id])
+    @study_sessions = @daily_summary.study_sessions.order(:start_time)
   end
 
   def create
   end
 
   def update
+    @daily_summary = current_user.daily_summaries.find(params[:id])
+    if @daily_summary.update(daily_summary_params)
+      @daily_summary.update_total_actual_time(params[:id])
+      redirect_to daily_summaries_path
+    else
+      @study_sessions = @daily_summary.study_sessions.order(:start_time)
+      render :edit
+    end
   end
   
   private
@@ -127,5 +139,43 @@ class DailySummariesController < ApplicationController
     end
     total_time
   end
+
+  # 学習時間を算出
+  #
+  # @param [Time] start_time 開始時間
+  # @param [Time] end_time 終了時間
+  # @return [Float] 学習時間（分単位　）
+  def calculate_actual_time(start_time, end_time)
+    return 0.0 if start_time.nil? || end_time.nil?
+
+    ((end_time - start_time) / 60).round(2)
+  end
+  
+  # DB登録用ストロングパラメータ
+  def daily_summary_params
+    params.require(:daily_summary).permit(:attribute1, :attribute2, study_sessions_attributes: [:id, :start_time, :end_time, :actual_time])
+  end
+  
+  # viewから受け取った時間と分の値をDBに登録できるようにDate型に変換する
+  # before_actionで処理を行う
+  def convert_time_params
+    return unless params[:daily_summary] && params[:daily_summary][:study_sessions_attributes]
+
+    date = params[:daily_summary][:date].to_date
+    params[:daily_summary][:study_sessions_attributes].each do |_, session_params|
+    next unless session_params[:start_time_hour].present? && session_params[:start_time_minute].present? && session_params[:end_time_hour].present? && session_params[:end_time_minute].present?
+
+    start_hour = session_params.delete(:start_time_hour).to_i
+    start_minute = session_params.delete(:start_time_minute).to_i
+    session_params[:start_time] = date.to_time.change(hour: start_hour, min: start_minute)
+
+    end_hour = session_params.delete(:end_time_hour).to_i
+    end_minute = session_params.delete(:end_time_minute).to_i
+    session_params[:end_time] = date.to_time.change(hour: end_hour, min: end_minute)
+
+    session_params[:actual_time] = calculate_actual_time(session_params[:start_time], session_params[:end_time])
+    end
+  end
+  
   
 end
