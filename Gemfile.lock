@@ -128,8 +128,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     public_suffix (6.0.1)
-    puma (5.6.9)
-      nio4r (~> 2.0)
+    puma (3.12.6)
     racc (1.8.1)
     rack (2.2.10)
     rack-mini-profiler (2.3.4)
@@ -243,7 +242,10 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.7)
   listen (~> 3.3)
-  puma (~> 5.0)
+  net-imap
+  net-pop
+  net-smtp
+  puma (~> 3.11)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7, >= 6.1.7.9)
   sass-rails (>= 6)
